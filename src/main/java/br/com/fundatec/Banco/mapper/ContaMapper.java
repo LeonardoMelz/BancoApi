@@ -2,6 +2,9 @@ package br.com.fundatec.Banco.mapper;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import br.com.fundatec.Banco.api.v1.dto.ContaInputDto;
@@ -25,6 +28,16 @@ public class ContaMapper {
 		
 	}
 
+	public List<ContaOutputDto> mapearListaContaOutputDto(List<Conta>contas){
+		List<ContaOutputDto> listaContaDto=new ArrayList<>();
+
+		for(Conta conta : contas) {
+			listaContaDto.add(mapearContaOutputDto(conta));
+		}
+			return listaContaDto;
+		}
+
+	
 
 	}
 

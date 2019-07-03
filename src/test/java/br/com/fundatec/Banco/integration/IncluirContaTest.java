@@ -19,7 +19,7 @@ import io.restassured.RestAssured;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class IncluirCachorroTest {
+public class IncluirContaTest {
 	
 	@LocalServerPort
 	private int port;
@@ -40,14 +40,14 @@ public class IncluirCachorroTest {
 			.header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
 			.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 			.body("{" + 
-					"	\"tipoConta\": \"Conta Corrente\"," + 
+					"	\"tipoConta\": \"Corrente\"," + 
 					"	\"saldo\": 0" + 
 					"}")
 			.when()
 			.post("/v1/contas")
 			.then()
 			.assertThat()
-			.body("tipoConta", Matchers.equalTo("Conta Corrente"))
+			.body("tipoConta", Matchers.equalTo("Corrente"))
 			.body("saldo", Matchers.equalTo (0))
 			.body("id", Matchers.greaterThan(0))
 			
@@ -57,5 +57,23 @@ public class IncluirCachorroTest {
 		
 	}
 	
-	
+	@Test
+	public void deveValidarTipoDaConta() {
+		
+		RestAssured
+		.given()
+		.header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+		.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+		.body("{" + 
+				"	\"tipoConta\": \"Conta Corrente\"," + 
+				"	\"saldo\": 0" + 
+				"}")
+		.when()
+		.post("/v1/contas")
+		.then()
+		.assertThat()
+		.statusCode(HttpStatus.BAD_REQUEST.value())
+		.body("errors[0].defaultMessage", Matchers.equalTo("Campo tipo da conta invalido"));
+		Assert.assertTrue(contaRepository.count() == 0);
+}
 }

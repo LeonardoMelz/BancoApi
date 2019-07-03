@@ -1,5 +1,5 @@
 package br.com.fundatec.Banco.integration;
-/*package br.com.fundatec.ExemploApi.integration;
+
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -11,41 +11,38 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.fundatec.ExemploApi.entity.Conta;
-import br.com.fundatec.ExemploApi.repository.CachorroRepository;
+import br.com.fundatec.Banco.entity.Conta;
+import br.com.fundatec.Banco.repository.ContaRepository;
 import io.restassured.RestAssured;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ListarCachorroTest {
+public class ListarContaTest {
 	
 	@LocalServerPort
 	private int port;
 	
 	@Autowired
-	private CachorroRepository cachorroRepository;
+	private ContaRepository contaRepository;
 	
 	@Before
 	public void setUp() {
 		RestAssured.port = port;
 		RestAssured.baseURI = "http://localhost";
-		cachorroRepository.deleteAll();
+		contaRepository.deleteAll();
 	}
 	
 	@Test
-	public void deveBuscarUmaListaDeCachorros() {
-		cachorroRepository.save(new Conta(null, "Bob", "Poodle", "Médio", 15));
-		cachorroRepository.save(new Conta(null, "Rex", "Pitbull", "Grande", 4));
+	public void deveBuscarUmaListaDeContas() {
+		contaRepository.save(new Conta(null, "popanca", (long) 2000));
+		contaRepository.save(new Conta(null, "conta corrente",(long) 1000));
 		
 		RestAssured
-			.get("/v1/cachorros")
+			.get("/v1/contas")
 			.then()
-			.body("nome", Matchers.hasItems("Bob", "Rex"))
-			.body("raca", Matchers.hasItems("Poodle", "Pitbull"))
-			.body("porte", Matchers.hasItems("Médio", "Grande"))
-			.body("idade", Matchers.hasItems(15, 4))
+			.body("tipoConta", Matchers.hasItems("popanca", "conta corrente"))
+			.body("saldo", Matchers.hasItems(2000, 1000))
 			.statusCode(HttpStatus.OK.value());
 	}
 
 }
-*/
