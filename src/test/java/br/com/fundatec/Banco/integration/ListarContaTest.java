@@ -35,12 +35,12 @@ public class ListarContaTest {
 	@Test
 	public void deveBuscarUmaListaDeContas() {
 		contaRepository.save(new Conta(null, "popanca", (long) 2000));
-		contaRepository.save(new Conta(null, "conta corrente",(long) 1000));
+		contaRepository.save(new Conta(null, "corrente",(long) 1000));
 		
 		RestAssured
 			.get("/v1/contas")
 			.then()
-			.body("tipoConta", Matchers.hasItems("popanca", "conta corrente"))
+			.body("tipoConta", Matchers.hasItems("popanca", "corrente"))
 			.body("saldo", Matchers.hasItems(2000, 1000))
 			.statusCode(HttpStatus.OK.value());
 	}

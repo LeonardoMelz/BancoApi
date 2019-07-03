@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Conta {
@@ -13,7 +15,9 @@ public class Conta {
 	private Long id;
 	private String tipoConta;
 	private Long saldo;
-	
+	@ManyToOne
+	@JoinColumn(name = "idCliente")
+	private Cliente cliente;
 	
 	public Conta() {
 		
@@ -41,6 +45,11 @@ public class Conta {
 	}
 	public void setSaldo(Long saldo) {
 		this.saldo = saldo;
+	}
+
+	public void setCliente(Cliente cliente) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

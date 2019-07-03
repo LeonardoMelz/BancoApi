@@ -1,6 +1,7 @@
 package br.com.fundatec.Banco.integration;
 
-import org.hamcrest.Matcher;
+import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 
+
+import br.com.fundatec.Banco.entity.Cliente;
+import br.com.fundatec.Banco.entity.Conta;
+import br.com.fundatec.Banco.repository.ClienteRepository;
 import br.com.fundatec.Banco.repository.ContaRepository;
 import io.restassured.RestAssured;
 
@@ -25,12 +30,18 @@ public class IncluirContaTest {
 	private int port;
 	@Autowired
 	private ContaRepository contaRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	private Cliente cliente;
+	
+	
 	
 	@Before
 	public void setUp() {
 		RestAssured.port = port;
 		RestAssured.baseURI = "http://localhost";
 		contaRepository.deleteAll();
+		cliente = clienteRepository.save(new Cliente(null, "Leonardo", 18, "Rua Dante Angelo Pilla", "933481419"));
 	}
 	
 	@Test
@@ -42,6 +53,7 @@ public class IncluirContaTest {
 			.body("{" + 
 					"	\"tipoConta\": \"Corrente\"," + 
 					"	\"saldo\": 0" + 
+					"    \"idCliente\":"+cliente.getId() +
 					"}")
 			.when()
 			.post("/v1/contas")
@@ -53,7 +65,10 @@ public class IncluirContaTest {
 			
 			.statusCode(HttpStatus.CREATED.value());
 	
-		Assert.assertTrue(contaRepository.count() > 0);
+		Conta contaIncluido = ((List<Conta>)contaRepository.findAll()).get(0); 
+		
+		
+		Assert.assertTrue(contaRepository.count() > 0); 
 		
 	}
 	
@@ -76,4 +91,6 @@ public class IncluirContaTest {
 		.body("errors[0].defaultMessage", Matchers.equalTo("Campo tipo da conta invalido"));
 		Assert.assertTrue(contaRepository.count() == 0);
 }
+	
+	
 }

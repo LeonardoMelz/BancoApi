@@ -21,7 +21,7 @@ public class ContaService {
 		return (List<Conta>) contaRepository.findAll();
 	}
 	
-	public Conta incluir(Conta conta) {	
+	public Conta salvar(Conta conta) {	
 		return contaRepository.save(conta);
 		
 	}
