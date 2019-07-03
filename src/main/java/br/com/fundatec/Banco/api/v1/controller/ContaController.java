@@ -36,14 +36,13 @@ public class ContaController {
 
 
 	@PostMapping("/v1/contas")
-	public ResponseEntity<?> incluirConta(@Valid @RequestBody ContaInputDto contaInputDto ) {
-				Conta conta = contaMapper.mapearConta(contaInputDto);
-				Cliente cliente = clienteService.consultar(contaInputDto.getIdCliente());
-				conta.setCliente(cliente);		
-				conta = contaService.salvar(conta);
-				ContaOutputDto contaOutputDto = contaMapper.mapearContaOutputDto(conta);
-				return ResponseEntity.status(HttpStatus.CREATED).body(contaOutputDto);	
-				}		
+	public ResponseEntity<ContaOutputDto> incluirConta(@Valid @RequestBody ContaInputDto contaInputDto) {
+		Conta conta = contaMapper.mapearConta(contaInputDto);
+		conta = contaService.salvar(conta);
+		ContaOutputDto contaOutputDto = contaMapper.mapearContaOutputDto(conta);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(contaOutputDto);
+	}
 	
 	
 	

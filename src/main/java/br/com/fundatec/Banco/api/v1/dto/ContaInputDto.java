@@ -1,10 +1,11 @@
 package br.com.fundatec.Banco.api.v1.dto;
 
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 public class ContaInputDto {
-	
+	@NotBlank(message = "O campo tipo da conta não foi preenchido")
 	@Pattern(regexp = "^Corrente$|^Popança$" , message = "Campo tipo da conta invalido")
 	private String tipoConta; 
 	private Long saldo;
