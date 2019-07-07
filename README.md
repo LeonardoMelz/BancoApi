@@ -1,2 +1,11 @@
-# CachorroApi
-Detalhes
+Relatorio 
+Eu fiz meu trabalho usando a Api de cachorros pois a Api que eu fiz em sala de aula estava faltando alguma dependencia que que não consegui achar, logo no começo fiz um teste para incluir e listar a conta botei para rodar e deu erro como o esperado.
+Começei o codigo pelo entity da conta criando os gets e sets e dois contrutores um vazio e o outro passando os parametros id,tipoConta e saldo. 
+Depois criei o contaRepository estendendo do crudRepository que tem os comandos de crud prontos para serem usados. 
+Com o repository criado eu pude criar o contaService e dentro dele  importar o repository, no service eu criei os comandos listarTodos e salvar. 
+Antes de criar o controller eu criei 3 Dtos um inputDto para incluir dados no banco,outPutDto para tirar dados do banco e um erroDto para mandar mensagens de erro quando alguma regra fosse quebrada, no inputDtop eu passei o tipo conta com 2 regras uma que obriga a pessoa a digitar algo e outra que obriga a pessoa a digitar a palavra (@NotBlank @pattern)correta e dei os gets e sets no outPutDto eu passei os gets e sets e criei 2 contrutores um vazio e o outro passando os parametros id,tipoConta e saldo. 
+Depois que os dtos estavam prontos eu fiz o mapper, nele eu criei o metodo mapearContaOutPutDto que leva como parametrodo tipo conta que recebe o getId,getTipoConta e getSaldo  , crie o maperaconta que recebe como parametro o contaInputDto e por ultimo criei o mapearListaContaOutputDto que tem um for que percorre uma lista de contas,
+Por ultimo para o meu codigo funcionar criei o meu controller, Nele eu comecei fazendo o @PostMapping que serve para receber os dados de um url com o final v1/contas e salvar na entidade conta,  passei o @Valid para validar os @NotBlank @pattern do inputDto e passei o  @RequestBody para poder passar o inputDto como corpo da api, ainda no controller criei o @PutMapping para retornar uma lista de contas, para retornar uma lista eu usei o outPutdto, e por ultimo criei o @putMapping para alterar os dados da conta, usei o @PathVariable para gerar um id aleatorio e @RequestBody para definir o inputDto como corpo 
+
+Com meu codigo funcionando criei um cliente com algumas regras nos seus parametros (Long id, String nome, @Min(14) Integer idade, String endereços, @Min(9) String contato , para o cliente ainda criei um repository que estende do crudRepository 
+E para fazer o cliente procurar o cliente fiz uma consulta pelo id para ele no clienteService.
