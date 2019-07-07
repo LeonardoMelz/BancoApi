@@ -18,25 +18,20 @@ import io.restassured.RestAssured;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ListarContaTest {
-	
 	@LocalServerPort
 	private int port;
-	
 	@Autowired
 	private ContaRepository contaRepository;
-	
 	@Before
 	public void setUp() {
 		RestAssured.port = port;
 		RestAssured.baseURI = "http://localhost";
 		contaRepository.deleteAll();
 	}
-	
 	@Test
 	public void deveBuscarUmaListaDeContas() {
 		contaRepository.save(new Conta(null, "popanca", (long) 2000));
 		contaRepository.save(new Conta(null, "corrente",(long) 1000));
-		
 		RestAssured
 			.get("/v1/contas")
 			.then()

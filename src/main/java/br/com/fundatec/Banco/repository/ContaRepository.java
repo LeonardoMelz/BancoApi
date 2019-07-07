@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import br.com.fundatec.Banco.entity.Conta;
 
 @Repository
-public interface ContaRepository extends CrudRepository<Conta, Long>{
+public interface ContaRepository extends CrudRepository<Conta, Long> {
 
 }

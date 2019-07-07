@@ -8,16 +8,16 @@ import br.com.fundatec.Banco.repository.ClienteRepository;
 @Service
 public class ClienteService {
 
-	private  ClienteRepository clienteRepository;
+	private ClienteRepository clienteRepository;
 
-	public  ClienteService( ClienteRepository clienteRepository) {
+	public ClienteService(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
-	
+
 	public Cliente consultar(Long id) {
-		
+
 		return clienteRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Năo encontrou pessoa para esse id "+id));
+				.orElseThrow(() -> new IllegalArgumentException("Năo encontrou pessoa para esse id " + id));
 	}
 
-	}
+}
